@@ -1,0 +1,84 @@
+---
+title: "Bayesian"
+author: "Yosune Miquelajauregui/LANCIS"
+date: "5 de diciembre de 2017"
+output: word_document
+---
+
+#Script para calcular probabilidades condicionadas de frecuencia dada la precipitación a nivel de AGEB.
+
+1. Importar datos
+```{r,Importar datos,eval=T}
+Bayesiano <-read.csv ("C:\\Users\\Usuario\\Documents\\Inundaciones\\Precipitacion_Inundacion\\Datos_Bayesiano\\Datos0714.csv", header=T)
+str(Bayesiano) 
+```
+2. Obtener percentiles
+```{r,Obtener percentiles,eval=T}
+quantile(Bayesiano$Precipitacion, c(.25, .50, .75))
+range(Bayesiano$Precipitacion)  
+quantile(Bayesiano$Frecuencia, c(.25, .50, .75))
+quantile(Bayesiano$Volumen,  c(.25, .50, .75))
+```
+3. Crear categorías
+```{r,Crear categorías ,eval=T}
+Bayesiano$FrecCateg<-ifelse(Bayesiano$Frecuencia<5, "1",ifelse(Bayesiano$Frecuencia>4.99 & Bayesiano$Frecuencia<21.4,"2",ifelse(Bayesiano$Frecuencia>21.39 & Bayesiano$Frecuencia<69.7, "3", "4")))
+Bayesiano$PrecCateg<-ifelse(Bayesiano$Precipitacion<571.8, "1",ifelse(Bayesiano$Precipitacion>571.79 &Bayesiano$Precipitacion<638.8,"2",ifelse(Bayesiano$Precipitacion>638.79 & Bayesiano$Precipitacion<725.4, "3", "4")))
+Bayesiano$VolCateg<-ifelse(Bayesiano$Volumen< 6.6, "1",ifelse(Bayesiano$Volumen> 6.59&Bayesiano$Volumen<21.4,"2",ifelse(Bayesiano$Volumen>21.39 & Bayesiano$Volumen<69.70, "3", "4")))
+```
+
+```{r,eval=T}
+head(Bayesiano)
+```
+
+4. Obtener el número de AGEBS en cada categoría
+```{r,eval=T}
+TablaPrecFrec <- xtabs(~FrecCateg+PrecCateg, data=Bayesiano)
+TablaPrecVolu <- xtabs(~VolCateg+PrecCateg, data=Bayesiano)
+```
+
+5. Obtener probabilidades condicionadas
+```{r,Probabilidades ,eval=T}
+probF1<- TablaPrecFrec[,1]/sum(TablaPrecFrec[,1])
+probF2<- TablaPrecFrec[,2]/sum(TablaPrecFrec[,2])
+probF3<- TablaPrecFrec[,3]/sum(TablaPrecFrec[,3])
+probF4<- TablaPrecFrec[,4]/sum(TablaPrecFrec[,4])
+
+probV1<- TablaPrecVolu[,1]/sum(TablaPrecVolu[,1])
+probV2<- TablaPrecVolu[,2]/sum(TablaPrecVolu[,2])
+probV3<- TablaPrecVolu[,3]/sum(TablaPrecVolu[,3])
+probV4<- TablaPrecVolu[,4]/sum(TablaPrecVolu[,4])
+```
+
+6. Asignar probabilidades a las AGEBS
+```{r, eval=T}
+Bayesiano$ProbaFP<-ifelse(Bayesiano$FrecCateg== "1"& Bayesiano$PrecCateg=="1",probF1[1], ifelse(Bayesiano$FrecCateg== "2"& Bayesiano$PrecCateg=="1",probF1[2],ifelse(Bayesiano$FrecCateg== "3"& Bayesiano$PrecCateg=="1",probF1[3],ifelse(Bayesiano$FrecCateg== "4"& Bayesiano$PrecCateg=="1",probF1[4], ifelse(Bayesiano$FrecCateg== "1"& Bayesiano$PrecCateg=="2",probF2[1],ifelse(Bayesiano$FrecCateg== "2"& Bayesiano$PrecCateg=="2",probF2[2],ifelse(Bayesiano$FrecCateg== "3"& Bayesiano$PrecCateg=="2",probF2[3],ifelse(Bayesiano$FrecCateg== "4"& Bayesiano$PrecCateg=="2",probF2[4],ifelse(Bayesiano$FrecCateg== "1"& Bayesiano$PrecCateg=="3",probF3[1], ifelse(Bayesiano$FrecCateg== "2"& Bayesiano$PrecCateg=="3",probF3[2],ifelse(Bayesiano$FrecCateg== "3"& Bayesiano$PrecCateg=="3",probF3[3],ifelse(Bayesiano$FrecCateg== "4"& Bayesiano$PrecCateg=="3",probF3[4],ifelse(Bayesiano$FrecCateg== "1"& Bayesiano$PrecCateg=="4",probF4[1],ifelse(Bayesiano$FrecCateg== "2"& Bayesiano$PrecCateg=="4",probF4[2],ifelse(Bayesiano$FrecCateg== "3"& Bayesiano$PrecCateg=="4",probF4[3],probF4[4])))))))))))))))
+
+Bayesiano$ProbaVP<-ifelse(Bayesiano$VolCateg== "1"& Bayesiano$PrecCateg=="1",probV1[1], ifelse(Bayesiano$VolCateg== "2"& Bayesiano$PrecCateg=="1",probV1[2],ifelse(Bayesiano$VolCateg== "3"& Bayesiano$PrecCateg=="1",probV1[3],ifelse(Bayesiano$VolCateg== "4"& Bayesiano$PrecCateg=="1",probV1[4], ifelse(Bayesiano$VolCateg== "1"& Bayesiano$PrecCateg=="2",probV2[1],ifelse(Bayesiano$VolCateg== "2"& Bayesiano$PrecCateg=="2",probV2[2],ifelse(Bayesiano$VolCateg== "3"& Bayesiano$PrecCateg=="2",probV2[3],ifelse(Bayesiano$VolCateg== "4"& Bayesiano$PrecCateg=="2",probV2[4],ifelse(Bayesiano$VolCateg== "1"& Bayesiano$PrecCateg=="3",probV3[1], ifelse(Bayesiano$VolCateg== "2"& Bayesiano$PrecCateg=="3",probV3[2],ifelse(Bayesiano$VolCateg== "3"& Bayesiano$PrecCateg=="3",probV3[3],ifelse(Bayesiano$VolCateg== "4"& Bayesiano$PrecCateg=="3",probV3[4],ifelse(Bayesiano$VolCateg== "1"& Bayesiano$PrecCateg=="4",probV4[1],ifelse(Bayesiano$VolCateg== "2"& Bayesiano$PrecCateg=="4",probV4[2],ifelse(Bayesiano$VolCateg== "3"& Bayesiano$PrecCateg=="4",probV4[3],probV4[4])))))))))))))))
+```
+
+7. Probabilidades acumuladas para cada categoría de precipitació
+```{r,Probabilidades acumuladas ,eval=T}
+####Sacar probabilidades acumuladas
+cummulativeP1 <- c(probF1[1], probF1[1]+probF1[2],probF1[1]+probF1[2]+probF1[3],probF1[1]+probF1[2]+probF1[3]+probF1[4])
+cummulativeP2 <- c(probF2[1], probF2[1]+probF2[2],probF2[1]+probF2[2]+probF2[3],probF2[1]+probF2[2]+probF2[3]+probF2[4])
+cummulativeP3 <- c(probF3[1], probF3[1]+probF3[2],probF3[1]+probF3[2]+probF3[3],probF3[1]+probF3[2]+probF3[3]+probF3[4])
+cummulativeP4 <- c(probF4[1], probF4[1]+probF4[2],probF4[1]+probF4[2]+probF4[3],probF4[1]+probF4[2]+probF4[3]+probF4[4])
+```
+
+8. Graficar probabilidades acumuladas
+```{r,Graficar probabilidades acumuladas ,eval=T}
+plot(cummulativeP1,type="l", col="blue", ylab= "Probabilidad acumulada", xlab="Precipitación")
+lines(cummulativeP2,type="l", col="green")
+lines(cummulativeP3,type="l", col="orange")
+lines(cummulativeP4,type="l", col="red")
+legend(3,0.6, c("P1","P2","P3","P4"), horiz=F,bty="n",
+lty=1,lwd=2,col=c("blue","green","orange","red"))
+```
+
+9. Salvar resultados
+```{r,Tablas ,eval=F}
+write.csv(Bayesiano, file="C:\\Users\\Usuario\\Documents\\Inundaciones\\Precipitacion_Inundacion\\ProbabilidadesbayesianAGEB0714.csv")
+```
+
+10.Una vez lista la tabla, se utilizó ArcGIS para asignar un ID de Colonias, un ID de AGEB y un valor de precipitación promedio para el periodo 2007-2014 a nivel de AGEB.
+

@@ -1,0 +1,136 @@
+---
+title: "Encharcamientos_Municipio"
+author: "Yosune Miquelajauregui/LANCIS"
+date: "21 de noviembre de 2017"
+output: word_document
+---
+###**Script para procesar los datos de encharcamientos (volumen y frecuencia)**
+
+Objetivo: Obtener las frecuencias y el volumen de los encharcamientos para cada Colonia. Generar .csv´s para cada año (2007-2014).
+
+1. Importar los datos
+```{r, Importar datos de encharcamiento reportados, eval=T, echo=TRUE}
+inundaciones_magnitudAO <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\ALVAROOBREGON.csv",header=TRUE)
+inundaciones_magnitudAZCA <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\AZCAPOTZALCO.csv",header=TRUE)
+inundaciones_magnitudBENJ <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\BENITOJUÁREZ.csv",header=TRUE)
+inundaciones_magnitudCONTR <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\CONTRERAS.csv",header=TRUE)
+inundaciones_magnitudCOYO <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\COYOACÁN.csv",header=TRUE)
+inundaciones_magnitudCUAJ <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\CUAJIMALPA.csv",header=TRUE)
+inundaciones_magnitudGM <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\GUSTAVOMADERO.csv",header=TRUE)
+inundaciones_magnitudMH <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\MIGUELH.csv",header=TRUE)
+inundaciones_magnitudMA <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\MILPAALTA.csv",header=TRUE)
+inundaciones_magnitudTH <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\TLAHUAC.csv",header=TRUE)
+inundaciones_magnitudVC <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\VENUSTIANOCARRANZA.csv",header=TRUE)
+inundaciones_magnitudXOCH <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\XOCHIMILCO.csv",header=TRUE)
+inundaciones_magnitudIZTA <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\IZTAPALAPA.csv",header=TRUE)
+inundaciones_magnitudCUAU <- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\CUAUHTEMOC.csv",header=TRUE)
+inundaciones_magnitudIZTAL<- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\ITZTACALCO.csv",header=TRUE)
+inundaciones_magnitudTLAL<- read.csv("C:\\Users\\Usuario\\Documents\\Inundaciones\\Datos_EncharcamientosMagnitudColonia\\TLALPAN.csv",header=TRUE)
+```
+
+2. Crear un dataframe que contenga todas las Colonias
+```{r, Juntar todos objetos en un data.frame, eval=T, echo=T}
+inundaciones_magnitud <- rbind(inundaciones_magnitudAO,inundaciones_magnitudBENJ,inundaciones_magnitudAZCA,inundaciones_magnitudCONTR,inundaciones_magnitudCOYO,inundaciones_magnitudCUAJ,inundaciones_magnitudCUAU,inundaciones_magnitudGM,inundaciones_magnitudIZTA,inundaciones_magnitudIZTAL,inundaciones_magnitudMH,inundaciones_magnitudMA,inundaciones_magnitudTH,inundaciones_magnitudTLAL,inundaciones_magnitudVC,inundaciones_magnitudXOCH)
+```
+
+3. Verificar estructura del objeto creado
+```{r, verificar estructura del objeto, eval=T, echo=T}
+str(inundaciones_magnitud)
+```
+
+4. Ordenar niveles
+```{r, ordenar niveles, eval=T, echo=TRUE}
+levels(inundaciones_magnitud$DELEGACIÓN)
+levels (inundaciones_magnitud$DELEGACIÓN) <- c("ALVARO OBREGON", "BENITO JUAREZ", "AZCAPOTZALCO",
+ "MAGDALENA CONTRERAS","COYOACAN","CUAJIMALPA","CUAUHTEMOC","GUSTAVO A. MADERO","IZTAPALAPA","IZTACALCO","MIGUEL HIDALGO","MILPA ALTA","TLAHUAC","TLALPAN","VENUSTIANO CARRANZA","XOCHIMILCO") 
+inundaciones_magnitud$DELEGACIÓN <- as.factor(inundaciones_magnitud$DELEGACIÓN)
+```
+
+5. Generar nuevas variables: Categorías de tipo y concatenación Municipio_Colonia para lidiar con Colonias del mismo nombre en Municipios distintos)
+```{r, generar nuevas variables; MuniColo y categorías de tipo, eval=T, echo=T}
+inundaciones_magnitud$MuniColo <- paste(inundaciones_magnitud$DELEGACIÓN, inundaciones_magnitud$COLONIA, sep = "_")
+inundaciones_magnitud$Tipo <- ifelse(inundaciones_magnitud$DICTAMEN=="ATARJEA OBSTRUIDA","Obstrucción",ifelse(inundaciones_magnitud$DICTAMEN=="COLADERA OBSTRUIDA","Obstrucción",
+ifelse(inundaciones_magnitud$DICTAMEN=="FALTA DE INFRAESTRUCTURA","Insuficiencia",
+ifelse(inundaciones_magnitud$DICTAMEN=="INSUFICIENCIA DE ATARJEA Y COLECTOR", "Insuficiencia",ifelse(inundaciones_magnitud$DICTAMEN=="INSUFICIENCIA DE GRIETA", "Insuficiencia", 
+ifelse(inundaciones_magnitud$DICTAMEN=="RUPTURA DE TUBO DE AGUA POTABLE","Ruptura",
+ifelse(inundaciones_magnitud$DICTAMEN=="INEXISTENTE AL MOMENTO DE LA INSPECCION [NO SE APRECIAN DIMENSIONES]", "Inexistente", 
+ifelse(inundaciones_magnitud$DICTAMEN=="INEXISTENTE AL MOMENTO DE LA INSPECCION", "Inexistente", 
+ifelse(inundaciones_magnitud$DICTAMEN=="NO SE OPERO CARCAMO DE BOMBEO","Falta Bombeo",
+ifelse(inundaciones_magnitud$DICTAMEN=="HUNDIMIENTO DE CARPETA ASFALTICA" , "Hundimiento", 
+ifelse(inundaciones_magnitud$DICTAMEN== "HUNDIMIENTO DE LA CARPETA ASFALTICA" ,
+"Hundimiento", "Otro")))))))))))
+```
+
+6. Verificar estructura
+```{r, verificar estructura, eval=T, echo=T}
+str(inundaciones_magnitud)
+inundaciones_magnitud$Tipo <- as.factor(inundaciones_magnitud$Tipo)
+levels(inundaciones_magnitud$Tipo)
+```
+
+7. Generar frecuencias
+```{r, generar frecuencias, eval=T, echo=T}
+inundaciones_magnitud$Frecuencia <- rep (1, length(inundaciones_magnitud[,1]))
+str(inundaciones_magnitud)
+``` 
+
+8. Desagregar años 2007-2014
+```{r, desagregar año, eval=T, echo=TRUE} 
+inundaciones_magnitud$Año<-as.factor(inundaciones_magnitud$Año)
+inundacion2007<- inundaciones_magnitud[which(inundaciones_magnitud$Año=='2007'), ]    
+inundacion2008<- inundaciones_magnitud[which(inundaciones_magnitud$Año=='2008'), ]      
+inundacion2009<- inundaciones_magnitud[which(inundaciones_magnitud$Año=='2009'), ]  
+inundacion2010<- inundaciones_magnitud[which(inundaciones_magnitud$Año=='2010'), ]  
+inundacion2011<- inundaciones_magnitud[which(inundaciones_magnitud$Año=='2011'), ] 
+inundacion2012<- inundaciones_magnitud[which(inundaciones_magnitud$Año=='2012'), ] 
+inundacion2013<- inundaciones_magnitud[which(inundaciones_magnitud$Año=='2013'), ]
+inundacion2014<- inundaciones_magnitud[which(inundaciones_magnitud$Año=='2014'), ]
+```
+
+9. Función para sumar frecuencias y volumen
+```{r, funcion para evaluar frecuencias y volumen, eval=T, echo=T}
+Tablas <- function (x){
+ TablaDesagregado<- aggregate(cbind(x[,15],x[,12]), by=list(Colonia=x[,13]), FUN=sum) 
+ colnames(TablaDesagregado) <- c("MuniColo","Frecuencia","Volumen")
+ return(TablaDesagregado)
+}
+```
+
+10. Llamar a la función y evaluar los datos para cada año
+```{r, llamar a la función y evaluar cada dataset anual, eval=T, echo=T} 
+ColoniaDesagregadoAnual07 <- Tablas(inundacion2007)
+ColoniaDesagregadoAnual08 <- Tablas(inundacion2008)
+ColoniaDesagregadoAnual09 <- Tablas(inundacion2009)
+ColoniaDesagregadoAnual10 <- Tablas(inundacion2010)
+ColoniaDesagregadoAnual11 <- Tablas(inundacion2011)
+ColoniaDesagregadoAnual12 <- Tablas(inundacion2012)
+ColoniaDesagregadoAnual13 <- Tablas(inundacion2013)
+ColoniaDesagregadoAnual14 <- Tablas(inundacion2014)
+```
+
+11. Salvar los objetos como .csv
+```{r, salvar los objetos como .csv, eval=F, echo=T} 
+write.csv(FileName, file="path\\Filename.csv")
+```
+
+12. Obtener frecuencias y volumen agregados 2007-2014
+```{r, función para calcular frecuencias y volumen agregados, eval=T, echo=T} 
+TablasAgregado <- function (x){
+ TablaDesagregadoFrec <- aggregate(cbind(x[,15]), by=list(Colonia=x[,13]), FUN=sum) 
+  TablaDesagregadoVol <- aggregate(cbind(x[,12]), by=list(Colonia=x[,13]), FUN=mean) 
+ TablaAgregado <- cbind(TablaDesagregadoFrec, TablaDesagregadoVol) 
+ TablaAgregado <- TablaAgregado[,c(1,2,4)]
+ colnames(TablaAgregado) <- c("MuniColo","Frecuencia","Volumen")
+ return(TablaAgregado)
+}
+```
+
+13. Evaluar la función
+```{r, evaluar función, eval=F, echo=T} 
+ColoniaAgregado0714 <- TablasAgregado(inundaciones_magnitud)
+```
+
+14. Salvar  objeto como .csv
+```{r, salvar objeto como .csv, eval=F, echo=T} 
+write.csv(FileName, file="path\\Filename.csv")
+```
