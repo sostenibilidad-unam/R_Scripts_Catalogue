@@ -1,5 +1,9 @@
 # R_Scripts_Catalogue
 Catalogue of R scripts developed for LANCIS
 
-This catalogue has been created for LANCIS, UNAM. All scripts are property of the devloper and the institution.
+This catalogue has been developed by Dr. yosune Miquelajauregui from LANCIS, UNAM. All scripts are property of the Institution.
+
+The catalogue contains scripts to analyze data for MEGADAPT.
+
+
 
