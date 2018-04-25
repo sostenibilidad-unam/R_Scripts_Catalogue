@@ -11,7 +11,7 @@
 
 This catalogue is divided in two sections. The first section contains a collection of scripts which were developed to   manipulate, analyze and visualize data used for sustainability reserach. The second section is composed of scripts developed to perform statistical analyses and to implement mathematical models of socioecological systems.
 
-# Analyses for research on sustainability
+# Research on sustainability
 
 1. [Analyze flooding/Ponding data provided by Unidad Tormenta (SACMEX) for the period 2007-2014](PondingAnalysis.pdf)
 2. Calculate conditional probabilities of flooding/ponding events given precipitation inputs.
@@ -21,7 +21,7 @@ This catalogue is divided in two sections. The first section contains a collecti
 6. [Severity of flooding/ponding events](SeverityIndices.pdf)
 7. Analysis of type of flooding/ponding
 
-# Statistic and modelling
+# Statistics and modelling of socioecological systems
 
 1.
 
