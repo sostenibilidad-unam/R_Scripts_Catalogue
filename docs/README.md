@@ -1,4 +1,4 @@
-# R script for Sustainability Research
+# R scripts for Sustainability Research
 
  Author: Dra. Yosune Miquelajauregui Graf
  
