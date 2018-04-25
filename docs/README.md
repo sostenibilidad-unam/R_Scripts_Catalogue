@@ -24,6 +24,12 @@ This catalogue is divided in two sections. The first section contains a collecti
 # Statistics and modelling of socioecological systems
 
 1.
+2.
+3.
+4.
+5.
+6.
+7. [Generalized lineal models: Poisson distribution](ClusterAnalysis.pdf)
 
 
 
