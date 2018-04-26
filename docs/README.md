@@ -24,7 +24,7 @@ This catalogue is divided in two sections. The first section contains a collecti
 # Statistics in R and modelling of socioecological systems
 
 1. [Introduction to R](ScriptClase1.pdf)
-2. [Stochastic data generator,functions and loops](ScriptClase2.pdf)
+2. [Stochastic data generation, building functions and loops](ScriptClase2.pdf)
 3. [Apply family and bestiary of graphics](ScriptClase3.pdf)
 4. [Descriptive statistics](ScriptClase4.pdf)
 5. [Simple and multiple linear regression](Script5.pdf)
