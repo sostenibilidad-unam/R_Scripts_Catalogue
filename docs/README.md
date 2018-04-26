@@ -25,8 +25,8 @@ This catalogue is divided in two sections. The first section contains a collecti
 
 1. [Introduction to R](ScriptClase1.pdf)
 2. [Stochastic data generator,functions and loops](ScriptClase2.pdf)
-3. [Apply family and bestiary of graphics]ScriptClase3.pdf)
-4.
+3. [Apply family and bestiary of graphics](ScriptClase3.pdf)
+4. [Descriptive statistics](ScriptClase4.pdf)
 5.
 6.
 7. [Generalized lineal models: Poisson distribution](ScriptClase7.pdf)
