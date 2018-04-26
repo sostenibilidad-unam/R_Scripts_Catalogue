@@ -14,7 +14,7 @@ This catalogue is divided in two sections. The first section contains a collecti
 # Data Manipulation, Analysis and Visualization
 
 1. [Analyze flooding/Ponding data provided by Unidad Tormenta (SACMEX) for the period 2007-2014](PondingAnalysis.pdf)
-2. Calculate conditional probabilities of flooding/ponding events given precipitation inputs.
+2. [Calculate conditional probabilities of flooding/ponding events given precipitation inputs](Bayesian(1).pdf)
 3. Analyze climatic data for méxico city under global change
 4. [Multivariate analysis to identify homogeneous regions within Mexico city](ClusterAnalysis.pdf)
 5. Precipitation analysis
