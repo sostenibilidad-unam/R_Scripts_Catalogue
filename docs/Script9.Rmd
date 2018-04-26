@@ -1,0 +1,80 @@
+---
+title: "Script9"
+author: "Yosune Miquelajauregui"
+date: "20 de enero de 2018"
+output: word_document
+---
+
+# 1. Modelos estadisticos para medidas repetidas.
+
+
+```{r Importar datos, eval=TRUE}
+ranas <- read.table("rana.txt", header=T)
+head(ranas)
+levels(ranas$Sustrato)<- c("Turba", "Suelo", "Musgo")
+```
+
+```{r graficar datos, eval=TRUE}
+layout(mat=matrix(1:4, nrow=2))
+plot(ranas$perdidasqr~ranas$Pesoi, ylab="Perdida de agua (transformacion raiz cuadrada)", xlab="Peso  inicial(g)")
+plot(ranas$perdidasqr~ranas$TemAire, ylab="Perdida de agua (transformacion raiz cuadrada)", xlab="Temperatura del aire(C)")
+plot(ranas$perdidasqr~ranas$Sombra, ylab="Perdida de agua (transformacion raiz cuadrada)", xlab="Sombra")
+plot(ranas$perdidasqr~ranas$Sustrato, ylab="Perdida de agua (transformacion raiz cuadrada)", xlab="Tipo de sustrato")
+```
+
+```{r correr gee, eval=TRUE}
+##cargar paquete gee
+library(gee)
+mod_gee_ar1<-gee(perdidasqr~Pesoi+TemAire+Sombra+Sustrato, data=ranas, family=gaussian, corstr="AR-M", Mv=1, id=ID)
+mod_gee_unstr<-gee(perdidasqr~Pesoi+TemAire+Sombra+Sustrato, data=ranas, family=gaussian corstr="unstructured", id=ID)
+```
+
+Resumen
+```{r resumen gee, eval=TRUE}
+summary(mod_gee_ar1)
+```
+
+Verificar ajuste
+```{r verificar ajuste, eval=TRUE}
+##parametro de dispersion
+glm1<-glm(perdidasqr~Pesoi+TemAire+Sombra+Sustrato, data=ranas, , family=gaussian)
+sum(residuals(glm1, type="pearson")^2)/glm1$df.residual
+
+##residuales
+plot(mod_gee_ar1$residuals~mod_gee_ar1$fitted, ylab="Residuales", xlab="Valores predichos")
+
+##SCE
+sse.ar1<-sum((ranas$perdidasqr-fitted(mod_gee_ar1))^2)
+
+##valores p
+tmp <- summary(mod_gee_ar1)
+pvalue2sided <- 2*pnorm(-abs(tmp$coefficients[,5]))
+pvalue2sided
+```
+
+Datos de bacteria
+```{r datos bacteria, eval=TRUE}
+bacteria <-read.table("bacteria.txt", header = T)
+head(bacteria)
+bacteria$Presence1<-ifelse(bacteria$Presence=="y", 1, 0)
+hist(bacteria$Presence1)
+```
+
+```{r correr modelos, eval=TRUE}
+mod_bact_ar1<-gee(Presence1 ~ Treat_combo + Week + Treat_combo:Week, data = bacteria, id = ID, family = binomial,corstr = "AR-M", Mv = 1)
+##No hay efecto significativo de la interaccion, por lo que podemos correr modelo sin interaccion
+mod_bactb_ar1<-gee(Presence1 ~ Treat_combo + Week, data = bacteria, id = ID, family = binomial, corstr = "AR-M", Mv = 1)
+
+summary(mod_bact_ar1)
+tmp2 <- summary(mod_bact_ar1)
+pvalue2sideda <- 2*pnorm(-abs(tmp2$coefficients[,5]))
+pvalue2sideda
+summary(mod_bactb_ar1)
+tmp3 <- summary(mod_bactb_ar1)
+pvalue2sidedb <- 2*pnorm(-abs(tmp3$coefficients[,5]))
+pvalue2sidedb
+```
+
+```{r residuales, eval=TRUE}
+plot(mod_bactb_ar1$residuals~mod_bactb_ar1$fitted, ylab="Residuales", xlab="Valores predichos")
+```
