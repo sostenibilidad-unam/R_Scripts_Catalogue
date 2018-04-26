@@ -9,7 +9,7 @@
 
 
 
-This catalogue is divided in two sections. The first section contains a collection of scripts which were developed to   manipulate, analyze and visualize data used for sustainability research. The second section is composed of scripts developed to perform statistical analyses and to implement mathematical models of socioecological systems.
+This catalogue is divided in two sections. The first section contains a collection of scripts which were developed to manipulate, analyze and visualize data used for sustainability research. The second section is composed of scripts developed to perform statistical analyses and to implement mathematical models of socioecological systems.
 
 # Data Manipulation, Analysis and Visualization
 
@@ -20,6 +20,8 @@ This catalogue is divided in two sections. The first section contains a collecti
 5. Precipitation analysis
 6. [Severity of flooding/ponding events](SeverityIndices.pdf)
 7. Analysis of type of flooding/ponding
+8. WRF validation (under construction)
+9. Runoff analysis(under construction)
 
 # Statistics in R and modelling of socioecological systems
 
