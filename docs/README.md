@@ -29,7 +29,7 @@ This catalogue is divided in two sections. The first section contains a collecti
 4. [Descriptive statistics](ScriptClase4.pdf)
 5. [Simple and multiple linear regression](ScriptClase5.pdf)
 6. [AIC, multimodel inference and maximum likelihood](ScriptClase6.pdf)
-7. [Generalized lineal models: Poisson distribution](ScriptClase7.pdf)
+7. [Generalized lineal models: Poisson and binomial distribution](ScriptClase7.pdf)
 
 
 
