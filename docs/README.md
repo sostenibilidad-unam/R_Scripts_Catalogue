@@ -11,7 +11,7 @@
 
 This catalogue is divided in two sections. The first section contains a collection of scripts which were developed to   manipulate, analyze and visualize data used for sustainability reserach. The second section is composed of scripts developed to perform statistical analyses and to implement mathematical models of socioecological systems.
 
-# Analysis ffor research on sustainability
+# Data Manipulation, Analysis and Visualization
 
 1. [Analyze flooding/Ponding data provided by Unidad Tormenta (SACMEX) for the period 2007-2014](PondingAnalysis.pdf)
 2. Calculate conditional probabilities of flooding/ponding events given precipitation inputs.
@@ -23,8 +23,8 @@ This catalogue is divided in two sections. The first section contains a collecti
 
 # Statistics in R and modelling of socioecological systems
 
-1.[Introduction to R](ScriptClase1.pdf)
-2.
+1. [Introduction to R](ScriptClase1.pdf)
+2. [Stochastic data generator,functions and loops](ScriptClase2.pdf)
 3.
 4.
 5.
