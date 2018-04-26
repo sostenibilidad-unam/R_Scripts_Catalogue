@@ -28,7 +28,7 @@ This catalogue is divided in two sections. The first section contains a collecti
 3. [Apply family and bestiary of graphics](ScriptClase3.pdf)
 4. [Descriptive statistics](ScriptClase4.pdf)
 5.
-6.
+6. [AIC, multimodel inference and maximum likelihood](ScriptClase6.pdf)
 7. [Generalized lineal models: Poisson distribution](ScriptClase7.pdf)
 
 
