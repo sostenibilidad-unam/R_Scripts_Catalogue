@@ -20,6 +20,7 @@ This catalogue is divided in two sections. The first section contains a collecti
 5. Precipitation analysis
 6. [Severity of flooding/ponding events](SeverityIndices.pdf)
 7. [Analysis of type of flooding/ponding](tipoencharcamiento.pdf)
+8. [Data Science: handling missing values. An example using meteorological data] (WeatherStations.R)
 8. WRF validation (under construction)
 9. Runoff analysis(under construction)
 
