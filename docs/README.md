@@ -25,7 +25,7 @@ This catalogue is divided in two sections. The first section contains a collecti
 8. WRF validation (under construction)
 9. Runoff analysis(under construction)
 
-# Statistics in R and modelling of socioecological systems
+# Statistics and socioecological systems modelling in R
 
 1. [Introduction to R](ScriptClase1.pdf)
 2. [Stochastic data generation, building functions and loops](ScriptClase2.pdf)
