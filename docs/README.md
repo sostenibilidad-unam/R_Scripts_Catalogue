@@ -1,6 +1,6 @@
 # R scripts for Research on Sustainability
 
-# Author: Dra. Yosune Miquelajauregui Graf
+## Author: Dr. Yosune Miquelajauregui Graf
  
  This digital repository contains R scripts which have been developed for LANCIS, UNAM. 
 
