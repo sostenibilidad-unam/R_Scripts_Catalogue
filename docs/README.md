@@ -33,7 +33,7 @@ This catalogue is divided in two sections. The first section contains a collecti
 4. [Descriptive statistics](ScriptClase4.pdf)
 5. [Simple and multiple linear regression](Script5.pdf)
 6. [Maximum likelihood, Akaike Information Criteria and multimodel inference](ScriptClase6.pdf)
-7. [Generalized lineal models: Poisson and binomial distribution](ScriptClase7.pdf)
+7. [Generalized lineal models: Poisson and negative binomial distribution](ScriptClase7.pdf)
 8. [GEE for repeated measures](Script9.Rmd)
 9. [Introduction to modelling of socioecological systems]
 
